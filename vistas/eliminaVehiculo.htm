@@ -1,0 +1,98 @@
+<?php
+ if(!isset($_POST['eliminar'])){
+?>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+   <script language="JavaScript" type="text/javascript" src="librerias/varios.js"></script>
+  <title></title>
+  <script type="text/javascript">
+
+function grabar(){
+document.formulario.action= "index.php?controlador=vehiculos&accion=eliminavehiculo&id="+document.formulario.id.value;
+document.formulario.method= 'POST';
+document.formulario.submit();
+}
+
+function cancelar(){
+document.formulario.action= "_cancelar.php";
+document.formulario.method= 'POST';
+document.formulario.submit();
+}
+
+</script>
+  
+  
+  
+  
+  
+  </head>
+  <body>
+ <form name = 'formulario' id= 'formulario' >
+	 <table border="1" width="369" id="table1">
+	 	<tr>
+			<td colspan="3" width="247"><b>Eliminar Vehículo</b></td>
+		</tr>
+		<tr>
+			<td width="247" colspan="3">Seguro que desea eliminar:  <?php echo $idPlaca  ?> ?? </td>
+		</tr>
+		<tr>
+			<td width="104" height="49"> </td>
+			<td width="135" height="49">
+			<img border="0" src="imagenes/aceptar.jpg"  width="45" height="42"  onclick =  "grabar()"   >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<img border="0" src="imagenes/cancelar.jpg" width="45" height="39"  onclick =  "cancelar()"  ></td>
+			<td width="108" height="49"></td>
+		</tr>
+		</table>
+	 <input type=hidden name=id size=94 value = '<?php echo  $idPlaca ;?>'>
+	 <input type=hidden name=eliminar size=94 value = 'Si'>
+  </form>
+
+
+  </body>
+</html>
+
+<?php } else {
+  require_once './librerias/conectar.php';
+  global $servidor, $bd, $usuario, $contrasenia;
+  $db = new PDO('mysql:host=' . $servidor . ';dbname=' . $bd, $usuario, $contrasenia);
+  $elimina = $db->prepare("DELETE FROM `vehiculo` WHERE `idPlaca` = :idPlaca");
+  $elimina->bindParam(':idPlaca',$idPlaca);
+  $elimina->execute();
+  $afectadas = $elimina->rowCount();
+  if ($afectadas == 0 )
+    echo "No se pudo eliminar el registro, es probable que tenga otros registros relacionados";
+  else
+    echo "Su registro se eliminó satisfactoriamente";
+  
+ // echo "Hay que guardar el registro  $dni, $nombre, $fchNac, $sexo";
+//}
+
+?>
+
+<html>
+  <head>
+  
+  <script type="text/javascript">
+<!--
+     var ventana = window.self; 
+     ventana.opener = window.self; 
+     setTimeout("window.close()", 1200);
+//-->
+</script>
+
+  
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title></title>
+  </head>
+  <body>
+
+  </body>
+</html>
+
+
+
+<?php } ?>
+

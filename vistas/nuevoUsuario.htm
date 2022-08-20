@@ -1,0 +1,319 @@
+<?php  
+if (empty($_POST['btnEnviar'])){
+?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <link rel =stylesheet href="librerias/estilos.css" type ="text/css">
+
+  <script type="text/javascript"> 
+ 
+    $(document).ready(function(){
+      $("#txtFchVenc").datepicker({
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        minDate: "0M +0D",
+        dateFormat:"yy-mm-dd" 
+      });
+    })
+  
+   function validaEntradas(form){
+     usuario = form.txtUser.value
+     tam = usuario.length
+     if(tam < 3){
+       alert("El usuario debe contener mínimo 3 caracteres")
+       form.txtUser.focus();
+       return false
+     }    
+     pass = form.txtPass.value
+     pass2 = form.txtPass2.value
+
+     if(pass != pass2){
+       alert("Las contraseńas ingresadas no son iguales")
+       form.txtPass.focus();
+       return false
+
+     }
+     
+     tam = pass.length
+     
+     if (tam < 8){
+       alert("La contraseńa debe tener un tamańo minimo de 8 caracteres")
+       form.txtPass.focus();
+       return false
+     }
+     if (tam > 20){
+       alert("La contraseńa debe tener un tamańo máximo de 20 caracteres")
+       form.txtPass.focus();
+       return false
+     }
+
+     if (!campo.match(/([a-zA-Z])/)){
+       alert("La contraseńa debe contener al menos una letra")
+       form.txtPass.focus();
+       return false
+     }
+
+     if (!campo.match(/([0-9])/)){
+       alert("La contraseńa debe contener al menos un número")
+       form.txtPass.focus();
+       return false
+     }
+
+     if (!campo.match(/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,20})$/)){
+       alert("La contraseńa solo puede contener letras y números")
+       form.txtPass.focus();
+       return false
+     }
+
+    if (form.txtFchVenc.value == ''){
+      alert("Debe ingresar una fecha de vencimiento")
+      form.txtFchVenc.focus();
+      return false
+    }
+
+ 
+     return true
+   
+  }
+  </script>
+    
+
+  <title></title>
+
+  </head>
+  <body>
+    <form method="POST" action="index.php?controlador=aplicacion&accion=nuevoUsuario" onsubmit = 'return validaEntradas(this);' >
+    <table border="1" width="100%" id="table1">
+      <tr>
+        <th class='pagina' colspan="4"><b>Nuevo Usuario</b></th>
+		  </tr>
+		  <tr>
+        <td width="12%">Nombre</td>
+        <td width="38%"><input type="text" name="txtNombre" size="22"></td>
+        <td colspan="2">Nombre de la persona (ejemplo Juan Perez)</td>
+		  </tr>
+		  <tr>
+        <td  class = 'rojo'>Usuario</td>
+        <td>
+		      <input type="text" name="txtUser" size="15" maxlength="10"></td>
+        <td colspan="2">Nombre de usuario, 3 a 10 carac. (ejemplo jperez)</td>
+		  </tr>
+		  <tr>
+        <td class = 'rojo'>Contraseńa</td>
+        <td ><input type="password" name="txtPass" size="22" maxlength="22"></td>
+        <td colspan="2">Utilice solo letras y números (8 a 20 carac.)</td>
+		  </tr>
+      <tr>
+        <td class = 'rojo'>Repita Contr.</td>
+        <td ><input type="password" name="txtPass2" size="22" maxlength="22"></td>
+        <td colspan="2">Repita la contraseńa (8 a 20 carac.)</td>
+      </tr>
+		  <tr>
+        <td class = 'rojo'>Fch. Venc.</td>
+        <td><input type="text" name="txtFchVenc" id="txtFchVenc" size="10"></td>
+        <td colspan="2">Hasta cuando vale el usuario</td>
+		  </tr>
+		  
+		  <tr>
+        <th width="12%"><b>Permite:</b></th>
+        <th><b>Observación</b></th>
+        <th width="12%"><b>Permite:</b></th>
+        <th><b>Observación</b></th>
+		  </tr>
+		  <tr>
+        <td >Ingreso</td>
+        <td ><input type="checkbox" name="chkIngreso" value="Si">Ingresar nuevos datos</td>
+        <td >AdmCostos</td>
+        <td ><input type="checkbox" name="chkAdmCostos" value="Si">Ver costos asignados a los usuarios.</td>
+		  </tr>
+		  <tr>
+        <td >Edición</td>
+        <td><input type="checkbox" name="chkEdicion" value="Si">Modificar datos ya ingresados</td>
+        <td >AdmArt</td>
+        <td ><input type="checkbox" name="chkAdmArt" value="Si">Editar los artículos.</td>
+		  </tr>
+		  <tr>
+        <td>Consulta</td>
+        <td><input type="checkbox" name="chkConsulta" value="Si">Ver reportes operativos</td>
+        <td>AdmUnif</td>
+        <td><input type="checkbox" name="chkAdmUnif" value="Si">Administrar Manejo de uniformes</td>
+		  </tr>
+		  <tr>
+        <td >Admin</td>
+        <td width="126"><input type="checkbox" name="chkAdmin" value="Si">Eliminar registros y crear usuarios.</td>
+        <td>AdmMovil</td>
+        <td><input type="checkbox" name="chkAdmMovil" value="Si">Administrar Registro Móviles</td>
+		  </tr>
+		  <tr>
+        <td>Planilla</td>
+        <td><input type="checkbox" name="chkPlanilla" value="Si">Eliminar registros de la planilla.</td>
+        <td>AdmPlanilla</td>
+        <td><input type="checkbox" name="chkAdmPlanilla" value="Si">Generar planillas y bloquear usuarios</td>
+		  </tr>
+      <tr>
+        <td>Plame</td>
+        <td><input type="checkbox" name="chkPlame" value="Si">Generar archivos para el Plame.</td>
+        <td>AsignDespacho</td>
+        <td><input type="checkbox" name="chkAsignDespacho" value="Si">Asignar despachos.</td>
+      </tr>
+      <tr>
+        <td>Seguridad</td>
+        <td><input type="checkbox" name="chkSeguridad" value="Si">Crear y editar usuarios</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th colspan="2"><b>Adicionales</b></th>
+        <th colspan="2"><b>Observación</b></th>
+      </tr>
+      <tr>
+        <td>Tipo Usuario</td>
+        <td>
+          <select name = 'cmbTipoUsuario'>
+            <option>Web</option>
+            <option>Movil</option>
+            <option>Mixto</option>
+          </select>
+
+          <input type="checkbox" name="chkInvitado" value="Si">Invitado<br>
+        </td>
+        <td colspan="2">Web: Solo Web, Movil: Solo Movil, Mixto: Web y Movil</td>
+      </tr>
+      <tr>
+        <td>Carga</td>
+        <td>
+          <select name = 'cmbCargaDespachos'>
+            <option>No</option>
+            <option>Subir</option>
+            <option>Adm</option>
+          </select>
+          Despachos
+        </td>
+        <td colspan="2">No: Sin acceso, Subir: Subir archivo, Adm: Crea Despachos</td>
+      </tr>      
+      <tr>
+        <td>DNI/RUC</td>
+        <td><input type="text" name="txtDni" sixe="12" maxlength="11"></td>
+        <td colspan="2">Es necesario si el usuario recibe costos o si es invitado. </td>
+      </tr>      
+		  
+		  <tr>
+        <td colspan="4">
+        <p align="right"><input type="submit" value="Enviar" name="btnEnviar"><input type="reset" value="Limpiar" name="btnLimpiar"></td>
+		  </tr>
+    </table>
+    </form>
+  </body>
+</html>
+
+<?php } else {
+  //echo "aqui se va a grabar";
+  require_once './librerias/conectar.php';
+  global $servidor, $bd, $usuario, $contrasenia;
+  $db = new PDO('mysql:host=' . $servidor . ';dbname=' . $bd, $usuario, $contrasenia);
+  $usuario = $_SESSION["usuario"];
+  $nombre = $_POST['txtNombre'];
+  $user = $_POST['txtUser'];
+  $pass = $_POST['txtPass'];
+  $tipoUsuario =  $_POST['cmbTipoUsuario'];
+  $chkInvitado = (isset($_POST['chkInvitado']))?$_POST['chkInvitado']:null;
+  ///
+  $salt = substr(base64_encode(openssl_random_pseudo_bytes('30')), 0, 22);
+  $salt = strtr($salt, array('+' => '.'));
+  $hash = crypt($pass, '$2y$10$' . $salt);
+  //echo "El hash ".$hash;
+
+  ///
+  if ($chkInvitado == 'Si'){
+    $chkIngreso = $chkEdicion = $chkConsulta = $chkAdmCostos = $chkAdmin = $chkAdmArt = NULL;
+    $chkPlanilla = $chkAdmPlanilla = $chkAdmUnif = $chkPlame = $chkAdmMovil = $chkSeguridad = NULL;
+  } else {
+    $chkIngreso = (isset($_POST['chkIngreso']))?$_POST['chkIngreso']:null;
+    $chkEdicion = (isset($_POST['chkEdicion']))?$_POST['chkEdicion']:null;
+    $chkConsulta = (isset($_POST['chkConsulta']))?$_POST['chkConsulta']:null;
+    $chkAdmCostos = (isset($_POST['chkAdmCostos']))?$_POST['chkAdmCostos']:null;
+    $chkAdmin = (isset($_POST['chkAdmin']))?$_POST['chkAdmin']:null;
+    $chkAdmArt = (isset($_POST['chkAdmArt']))?$_POST['chkAdmArt']:null;
+    $chkPlanilla = (isset($_POST['chkPlanilla']))?$_POST['chkPlanilla']:null;
+    $chkAdmPlanilla = (isset($_POST['chkAdmPlanilla']))?$_POST['chkAdmPlanilla']:null;
+
+    $chkAdmUnif = (isset($_POST['chkAdmUnif']))?$_POST['chkAdmUnif']:null;
+    $chkPlame = (isset($_POST['chkPlame']))?$_POST['chkPlame']:null;
+    $chkAdmMovil = (isset($_POST['chkAdmMovil']))?$_POST['chkAdmMovil']:null;
+    $chkSeguridad = (isset($_POST['chkSeguridad']))?$_POST['chkSeguridad']:null;
+
+    $chkAsignDespacho = (isset($_POST['chkAsignDespacho']))?$_POST['chkAsignDespacho']:null;
+  }
+    $cargaDespachos =  ($_POST['cmbCargaDespachos'] == 'No')?NULL:$_POST['cmbCargaDespachos'];
+    $dni = (isset($_POST['txtDni']))?$_POST['txtDni']:null;
+    $fchVencimiento = $_POST['txtFchVenc'];
+
+ // echo "$nombre   $user   $pass  $dni  $chkIngreso   $chkEdicion   $chkConsulta   $chkAdmCostos  $chkAdmin   $chkPlanilla   $fchVencimiento";
+
+  //echo "SUCURSAL  $sucursal  USUARIO $usuario";
+  $consulta = $db->prepare("SELECT idTrabajador FROM `trabajador` WHERE idTrabajador = :dni AND estadoTrabajador = 'Activo'");
+  $consulta->bindParam(':dni', $dni);
+  $consulta->execute();
+  $data = $consulta->fetchAll();
+  $idTrabajador = "";
+  foreach ($data as $key => $value) {
+    $idTrabajador = $value['idTrabajador'];
+  }
+
+  if ($idTrabajador != "") {
+    $inserta = $db->prepare("INSERT INTO`usuario` (`idUsuario`, `contrasenia`,  `admin`, `edicion`, `ingreso`, `consulta`, `nombre`,`dni`, `planilla`, `admCostos`, `admArt`, `admPlanilla`, `admUnif`, `admMovil`, `plame`, `tipoUsuario`, `asignDespacho`, `cargaDespachos`, `seguridad`, `invitado`, `usuario`, `fchCreacion`, `fchVencimiento`) VALUES (:idUser, :pass,:chkAdmin, :chkEdicion, :chkIngreso, :chkConsulta, :nombre, :dni, :chkPlanilla, :chkAdmCostos,:chkAdmArt, :chkAdmPlanilla, :chkAdmUnif, :chkAdmMovil, :chkPlame, :tipoUsuario, :chkAsignDespacho, :cargaDespachos, :chkSeguridad, :chkInvitado, :usuario, CURDATE(), :fchVencimiento);");
+    $inserta->bindParam(':idUser',$user);
+    $inserta->bindParam(':pass',$hash);
+   // $inserta->bindParam(':hash',$hash);
+    $inserta->bindParam(':nombre',$nombre);
+    $inserta->bindParam(':chkAdmCostos',$chkAdmCostos);
+    $inserta->bindParam(':chkAdmArt',$chkAdmArt);
+    $inserta->bindParam(':chkAdmin',$chkAdmin);
+    $inserta->bindParam(':chkEdicion',$chkEdicion);
+    $inserta->bindParam(':chkIngreso',$chkIngreso);
+    $inserta->bindParam(':chkConsulta',$chkConsulta);
+    $inserta->bindParam(':chkPlanilla',$chkPlanilla);
+    $inserta->bindParam(':chkAdmPlanilla',$chkAdmPlanilla);
+    $inserta->bindParam(':chkAdmUnif',$chkAdmUnif);
+    $inserta->bindParam(':chkAdmMovil',$chkAdmMovil);
+    $inserta->bindParam(':chkPlame',$chkPlame);
+    $inserta->bindParam(':tipoUsuario',$tipoUsuario);
+    $inserta->bindParam(':chkAsignDespacho',$chkAsignDespacho);
+    $inserta->bindParam(':cargaDespachos',$cargaDespachos);
+    $inserta->bindParam(':chkSeguridad',$chkSeguridad);
+    $inserta->bindParam(':chkInvitado',$chkInvitado);
+    $inserta->bindParam(':dni',$dni);
+    $inserta->bindParam(':fchVencimiento',$fchVencimiento);
+    $inserta->bindParam(':usuario',$usuario);
+    $inserta->execute();
+  }
+ // echo "Hay que guardar el registro  $dni, $nombre, $fchNac, $sexo";
+
+?>
+
+<html>
+  <head>
+  <script type="text/javascript">
+    <!--
+    setTimeout("window.opener.location.reload(); window.close();", 200);
+    //-->
+  </script>
+
+  
+  <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+  <title></title>
+  </head>
+  <body>
+Procesado
+  </body>
+</html>
+
+
+
+<?php } ?>
